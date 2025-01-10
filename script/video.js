@@ -1,5 +1,64 @@
 // 1. Fetch, Load and Show Categories on HTML
 
+function getTimeString(time) {
+ if (time >= 31536000) {
+  const year = parseInt(time / 31536000);
+  let remainingSecond = time % 31536000;
+  const month = parseInt(remainingSecond / 2592000);
+  remainingSecond = remainingSecond % 2592000
+  const day = parseInt(remainingSecond / 86400);
+  remainingSecond = remainingSecond % 86400;
+  const hour = parseInt(remainingSecond / 3600);
+  remainingSecond = remainingSecond % 3600;
+  const minute = parseInt(remainingSecond / 60);
+  remainingSecond = remainingSecond % 60;
+  return `${year} year ${month} month ${day} day ${hour} hour ${minute} minute ${remainingSecond} second ago`
+ }
+
+
+ else if (time < 31536000 && time >= 2592000) {
+  const month = parseInt(time / 2592000);
+  let remainingSecond = time % 2592000
+  const day = parseInt(remainingSecond / 86400);
+  remainingSecond = remainingSecond % 86400;
+  const hour = parseInt(remainingSecond / 3600);
+  remainingSecond = remainingSecond % 3600;
+  const minute = parseInt(remainingSecond / 60);
+  remainingSecond = remainingSecond % 60;
+  return `${month} month ${day} day ${hour} hour ${minute} minute ${remainingSecond} second ago`
+ }
+ else if (time < 2592000 && time >= 86400) {
+  const day = parseInt(time / 86400);
+  let remainingSecond = time % 86400;
+  const hour = parseInt(remainingSecond / 3600);
+  remainingSecond = remainingSecond % 3600;
+  const minute = parseInt(remainingSecond / 60);
+  remainingSecond = remainingSecond % 60;
+  return `${day} day ${hour} hour ${minute} minute ${remainingSecond} second ago`
+ } else if (time < 86400 && time >= 3600) {
+  const hour = parseInt(time / 3600);
+  let remainingSecond = time % 3600;
+  const minute = parseInt(remainingSecond / 60);
+  remainingSecond = remainingSecond % 60;
+  return `${hour} hour ${minute} minute ${remainingSecond} second ago`
+ }
+ else if (time < 3600 && time >= 60) {
+  const minute = parseInt(remainingSecond / 60);
+  let remainingSecond = time % 60;
+  return `${minute} minute ${remainingSecond} second ago`
+ } else if (time < 60) {
+  const remainingSecond = time;
+  return `${remainingSecond} second ago`
+ }
+
+
+
+
+
+
+
+
+}
 
 // Create LoadCategories 
 const loadCategories = () => {
@@ -53,7 +112,8 @@ const displayVideos = (videos) => {
   <figure class = "h-[200px] relative">
     <img class = "h-full w-full object-cover"
       src=${video.thumbnail} />
-      <span class = "absolute right-2 bottom-2 bg-black rounded p-1 text-white" > ${video.others.posted_date}</span>
+      ${video.others.posted_date?.length == 0 ? "" : ` <span class = "absolute right-2 bottom-2 bg-black rounded p-1 text-white" > ${getTimeString(video.others.posted_date)}</span>`}
+     
   </figure>
   <div class="px-0 py-2 flex gap-2">
     <div>
